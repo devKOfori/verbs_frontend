@@ -1,0 +1,40 @@
+.login-form-container {
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.login-form-header {
+    text-align: center;
+}
+
+.login-form-content, .login-form-links {
+    width: 80%;
+    margin: auto;
+}
+
+input[type="email"], input[type="password"], input[type="text"] {
+    width: 100%;
+    padding: 0.5em 1em;
+    font-size: 15px;
+}
+
+.login-form-btn {
+    padding: 8px 16px;
+    background-color: black;
+    color: white;
+}
+
+.login-form-links {
+    font-size: 0.8em;
+    /* justify-content: space-between; */
+    /* flex-direction: column; */
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.login-form-links a {
+    padding: 3px;
+    margin: 0 2px;
+    color: var(--link-color);
+    text-decoration: underline;
+}
