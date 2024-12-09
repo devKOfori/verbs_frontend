@@ -1,6 +1,15 @@
+:root {
+    --link-color: rgb(0, 0, 234);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Utility Styles */
@@ -25,14 +34,67 @@
     padding: 0 10px;
 }
 
+.pb-x {
+    margin-bottom: 10px;
+}
+.pb-2x {
+    margin-bottom: 20px;
+}
+.pb-3x {
+    margin-bottom: 30px;
+}
+.pr-x {
+    padding-right: 10px;
+}
+.pr-2x {
+    margin-bottom: 20px;
+}
+.pr-3x {
+    margin-bottom: 30px;
+}
+
+/* margin */
+.mx-x {
+    margin: 0 10px;
+}
+.mx-2x {
+    margin: 0 20px;
+}
+.mx-3x {
+    margin: 0 30px;
+}
+.mb-x {
+    margin-bottom: 10px;
+}
+.mb-2x {
+    margin-bottom: 20px;
+}
+.mb-3x {
+    margin-bottom: 30px;
+}
+.mr-x {
+    margin-right: 10px;
+}
+.mr-2x {
+    margin-right: 20px;
+}
+.mr-3x {
+    margin-right: 30px;
+}
+
 /* button */
 .btn {
     border: 1px solid black;
     border-radius: 3px;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
 }
 
 .btn:hover {
     cursor: pointer;
     background-color: rgb(0, 0, 0);
     color: white;
+}
+
+.link-btn:hover {
+    color: inherit;
 }
