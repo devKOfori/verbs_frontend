@@ -1,5 +1,5 @@
 import React from "react";
-import { CiLogin } from "react-icons/ci";
+import { MdLogin } from "react-icons/md";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import '../assets/styles/Topbar.css'
 
@@ -11,7 +11,7 @@ const Topbar = () => {
           <div className="btn login-btn">
             <span className="login-text">login</span>{" "}
             <span className="login-icon">
-              <CiLogin />
+              <MdLogin />
             </span>
           </div>
           <div className="btn signup-btn">
