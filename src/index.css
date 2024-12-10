@@ -1,5 +1,6 @@
 :root {
     --link-color: rgb(0, 0, 234);
+    --danger: rgb(255, 0, 0);
 }
 
 * {
@@ -97,4 +98,10 @@ a {
 
 .link-btn:hover {
     color: inherit;
+}
+
+.error-message {
+    color: var(--danger);
+    font-size: 0.7em;
+    margin-top: 3px;
 }
