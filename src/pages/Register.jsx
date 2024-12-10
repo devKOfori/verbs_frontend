@@ -14,7 +14,7 @@ const Register = () => {
 
   const [errors, setErrors] = useState({});
 
-  const validateForm = (data) => {
+  const validateRegisterForm = (data) => {
     // this function validates the form data
     const errors = {};
     if (!data.firstname) {
@@ -49,7 +49,7 @@ const Register = () => {
       acceptPolicy,
     };
     // console.log(formData);
-    const formErrors = validateForm(formData);
+    const formErrors = validateRegisterForm(formData);
     setErrors(formErrors);
     if (Object.keys(formErrors).length === 0) {
         console.log('send data to backend');

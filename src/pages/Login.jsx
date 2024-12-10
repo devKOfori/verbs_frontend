@@ -16,7 +16,7 @@ const Login = () => {
       errors.email = "Enter your email address to login.";
     }
     if (!data.password) {
-      errors.password = "Enter your password address to login.";
+      errors.password = "Enter your password to login.";
     }
     return errors;
   };
