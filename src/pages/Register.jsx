@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
+import FormButton from "../components/FormButton";
 import "../assets/styles/Register.css";
 
 const Register = () => {
@@ -210,23 +211,13 @@ const Register = () => {
               )}
             </div>
             <div className="register-submit-btn">
-              <button
-                onClick={(e) => handleRegister(e)}
-                className="btn register-form-btn mb-x"
-                type="submit"
-              >
-                {loading ? (
-                  <ClipLoader
-                    color="white"
-                    loading={loading}
-                    size={15}
-                    aria-label="Registering Account"
-                    data-testid="registerLoader"
-                  />
-                ) : (
-                  "Sign Up"
-                )}
-              </button>
+              <FormButton
+                handleClick={handleRegister}
+                btnType={"submit"}
+                btnClass={"btn register-form-btn mb-x"}
+                btnText={"Sign Up"}
+                loading={loading}
+              />
             </div>
           </form>
         </div>
