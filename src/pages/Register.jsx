@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";
+import { ClipLoader } from "react-spinners";
 import "../assets/styles/Register.css";
 
 const Register = () => {
@@ -93,7 +94,7 @@ const Register = () => {
     const formErrors = validateRegisterForm(formData);
     setErrors(formErrors);
     if (Object.keys(formErrors).length === 0) {
-    //   setLoading(true);
+      //   setLoading(true);
       registerAccount();
       console.log("send data to backend");
     }
@@ -214,7 +215,17 @@ const Register = () => {
                 className="btn register-form-btn mb-x"
                 type="submit"
               >
-                {loading ? "..." : "Sign Up"}
+                {loading ? (
+                  <ClipLoader
+                    color="white"
+                    loading={loading}
+                    size={15}
+                    aria-label="Registering Account"
+                    data-testid="registerLoader"
+                  />
+                ) : (
+                  "Sign Up"
+                )}
               </button>
             </div>
           </form>
