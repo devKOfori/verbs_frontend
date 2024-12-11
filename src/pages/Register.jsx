@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MdErrorOutline } from "react-icons/md";
 import "../assets/styles/Register.css";
@@ -12,30 +12,71 @@ const Register = () => {
   const [confirmPassword, setconfirmPassword] = useState("");
   const [acceptPolicy, setacceptPolicy] = useState(false);
 
+  // set form errors state variable
   const [errors, setErrors] = useState({});
+
+  const [accountRegistered, setAccountRegistered] = useState(false);
+
+  // set spinner state variable for when registration POST request
+  const [loading, setLoading] = useState(false);
+
+  const registerAccount = async () => {
+    const payload = {
+      first_name: firstname,
+      last_name: lastname,
+      email: email,
+      password: password,
+    };
+    // const registerURL = "https://verbsmerch.pythonanywhere.com/api/register/";
+    const registerURL = "http://localhost:8000/api/register/";
+    try {
+      setLoading(true);
+      const res = await fetch(registerURL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw new Error(
+          `Error registering user. Response status: ${res.status}`
+        );
+      } else {
+        const data = await res.json();
+        setAccountRegistered(true);
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const validateRegisterForm = (data) => {
     // this function validates the form data
     const errors = {};
     if (!data.firstname) {
-        errors.firstname = "Firstname field cannot be empty."
+      errors.firstname = "Firstname field cannot be empty.";
     }
     if (!data.lastname) {
-        errors.lastname = "Lastname field cannot be empty."
+      errors.lastname = "Lastname field cannot be empty.";
     }
     if (!data.email) {
-        errors.email = "Email field cannot be empty."
+      errors.email = "Email field cannot be empty.";
     }
     if (!data.password) {
-        errors.password = "Password field cannot be empty."
+      errors.password = "Password field cannot be empty.";
     }
-    if (data.password !== data.confirmPassword) {       
+    if (data.password !== data.confirmPassword) {
       errors.confirmPassword = "Passwords do not match.";
     }
 
     if (!data.acceptPolicy) {
       errors.acceptPolicy = "Kindly accept the privacy policy to continue.";
     }
+
     return errors;
   };
   const handleRegister = (e) => {
@@ -52,9 +93,12 @@ const Register = () => {
     const formErrors = validateRegisterForm(formData);
     setErrors(formErrors);
     if (Object.keys(formErrors).length === 0) {
-        console.log('send data to backend');
+    //   setLoading(true);
+      registerAccount();
+      console.log("send data to backend");
     }
   };
+
   return (
     <div className="register-page">
       <div className="nav-section"></div>
@@ -75,11 +119,11 @@ const Register = () => {
                   onChange={(e) => setFirstname(e.target.value)}
                 />
                 {errors.firstname && (
-                <div className="error-message">
-                  <MdErrorOutline />
-                  {errors.firstname}
-                </div>
-              )}
+                  <div className="error-message">
+                    <MdErrorOutline />
+                    {errors.firstname}
+                  </div>
+                )}
               </div>
               <div className="form-group mb-2x">
                 <input
@@ -91,11 +135,11 @@ const Register = () => {
                   onChange={(e) => setLastname(e.target.value)}
                 />
                 {errors.lastname && (
-                <div className="error-message">
-                  <MdErrorOutline />
-                  {errors.lastname}
-                </div>
-              )}
+                  <div className="error-message">
+                    <MdErrorOutline />
+                    {errors.lastname}
+                  </div>
+                )}
               </div>
             </div>
             <div className="form-group mb-2x">
@@ -170,7 +214,7 @@ const Register = () => {
                 className="btn register-form-btn mb-x"
                 type="submit"
               >
-                Sign Up
+                {loading ? "..." : "Sign Up"}
               </button>
             </div>
           </form>
