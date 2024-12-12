@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/styles/Login.css";
+import FormButton from "../components/FormButton";
 import { MdErrorOutline } from "react-icons/md";
 
 const Login = () => {
@@ -19,6 +20,26 @@ const Login = () => {
       errors.password = "Enter your password to login.";
     }
     return errors;
+  };
+
+  const loginAccount = async () => {
+    const loginURL = "http://localhost:8000/api/token/";
+    const payload = {
+      email,
+      password,
+    };
+    try {
+      const response = await fetch(loginURL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Unable to login ${response.data}`)
+      }
+    } catch (error) {}
   };
 
   const handleLogin = (e) => {
@@ -75,13 +96,19 @@ const Login = () => {
               )}
             </div>
             <div className="login-submit-btn">
-              <button
+              <FormButton
+                btnClass={"btn login-form-btn mb-x"}
+                btnText={"Sign in"}
+                btnType={"submit"}
+                handleClick={handleLogin}
+              />
+              {/* <button
                 onClick={(e) => handleLogin(e)}
                 className="btn login-form-btn mb-x"
                 type="submit"
               >
                 Sign in
-              </button>
+              </button> */}
             </div>
           </form>
         </div>

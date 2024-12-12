@@ -108,3 +108,25 @@ a {
     font-size: 0.7em;
     margin-top: 3px;
 }
+
+.api-errors-container {
+    max-width: 70%;
+    min-height: 30px;
+    border-radius: 2px;
+    margin: 10px auto;
+    padding: 5px 0;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.api-errors {
+    max-width: 70%;
+    min-height: 30px;
+    border-radius: 2px;
+    margin: 10px auto;
+    padding: 5px 0;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.api-error-list {
+    /* list-style: none; */
+}

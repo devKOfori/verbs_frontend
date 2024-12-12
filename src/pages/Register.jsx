@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import { MdErrorOutline } from "react-icons/md";
-import { ClipLoader } from "react-spinners";
 import FormButton from "../components/FormButton";
 import "../assets/styles/Register.css";
 
@@ -16,6 +16,8 @@ const Register = () => {
 
   // set form errors state variable
   const [errors, setErrors] = useState({});
+  //   set api errors state variable
+  const [apiErrors, setApiErrors] = useState([]);
 
   const [accountRegistered, setAccountRegistered] = useState(false);
 
@@ -33,20 +35,25 @@ const Register = () => {
     const registerURL = "http://localhost:8000/api/register/";
     try {
       setLoading(true);
-      const res = await fetch(registerURL, {
+      const response = await fetch(registerURL, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      if (!res.ok) {
+      if (!response.ok) {
+        // retrieve errors from api
+        const errorData = await response.json();
+        setApiErrors(Object.values(errorData));
+        console.log(Object.values(errorData));
         throw new Error(
-          `Error registering user. Response status: ${res.status}`
+          `Error registering user. response status: ${response.status}`
         );
       } else {
-        const data = await res.json();
+        const data = await response.json();
         setAccountRegistered(true);
+        setApiErrors([]);
         console.log(data);
       }
     } catch (error) {
@@ -108,6 +115,19 @@ const Register = () => {
         <div className="register-form-header m-3x">
           <h1 className="h1 mb-2x">Create your account</h1>
         </div>
+        {/* <div className="api-errors-container"> */}
+        {apiErrors.length > 0 && (
+          <div className="api-errors error-message">
+            <ul className="api-error-list">
+              {apiErrors.map((apiError, index) => (
+                <li key={index} className="api-error">
+                  {apiError}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {/* </div> */}
         <div className="register-form-content">
           <form method="post">
             <div className="row">
