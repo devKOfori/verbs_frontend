@@ -1,15 +1,22 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/styles/Login.css";
 import FormButton from "../components/FormButton";
+import APIErrors from "../components/APIErrors";
 import { MdErrorOutline } from "react-icons/md";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  // set form frontend validation errors state variable
   const [errors, setErrors] = useState({});
+  //   set api errors state variable
+  const [apiErrors, setApiErrors] = useState([]);
+
+  // set spinner state variable for when registration POST request
+  const [loading, setLoading] = useState(false);
 
   const validateLoginForm = (data) => {
     const errors = {};
@@ -22,6 +29,8 @@ const Login = () => {
     return errors;
   };
 
+  const navigate = useNavigate();
+
   const loginAccount = async () => {
     const loginURL = "http://localhost:8000/api/token/";
     const payload = {
@@ -29,6 +38,7 @@ const Login = () => {
       password,
     };
     try {
+      setLoading(true);
       const response = await fetch(loginURL, {
         method: "POST",
         body: JSON.stringify(payload),
@@ -37,9 +47,31 @@ const Login = () => {
         },
       });
       if (!response.ok) {
-        throw new Error(`Unable to login ${response.data}`)
+        const errorData = await response.json();
+        setApiErrors(Object.values(errorData));
+        throw new Error(`Unable to login ${response.status}`);
+      } else {
+        const data = await response.json();
+        console.log(data);
+        setApiErrors([]);
+        toast.success("Login successful", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        return navigate("/products");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLogin = (e) => {
@@ -51,15 +83,18 @@ const Login = () => {
     const loginFormErrors = validateLoginForm(loginFormData);
     setErrors(loginFormErrors);
     if (Object.keys(loginFormErrors).length === 0) {
+      loginAccount();
       console.log("sign in successful...");
     }
   };
+
   return (
     <div className="login-page">
       <div className="login-form-container">
         <div className="login-form-header mb-2x">
           <h1 className="h1">Sign in</h1>
         </div>
+        {apiErrors.length > 0 && <APIErrors apiErrors={apiErrors} />}
         <div className="login-form-content">
           <form method="post">
             <div className="form-group mb-2x">
@@ -101,14 +136,8 @@ const Login = () => {
                 btnText={"Sign in"}
                 btnType={"submit"}
                 handleClick={handleLogin}
+                loading={loading}
               />
-              {/* <button
-                onClick={(e) => handleLogin(e)}
-                className="btn login-form-btn mb-x"
-                type="submit"
-              >
-                Sign in
-              </button> */}
             </div>
           </form>
         </div>
@@ -130,6 +159,7 @@ const Login = () => {
           </div>
         </div>
         <div className="footer"></div>
+        <ToastContainer />
       </div>
     </div>
   );
