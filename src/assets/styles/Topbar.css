@@ -1,12 +1,17 @@
+.topbar {
+    background-color: var(--bg-primary);
+}
+
 .topbar-content {
-    max-width: 500px;
-    margin-inline: auto;
-    justify-content: center;
+    max-width: 100%;
+    justify-content: flex-end;
     align-items: center;
-    gap: 0.8em;
-    flex-wrap: wrap;
-    min-height: 30px;
-    padding: 0.8em;
+    gap: 1.2em;
+    min-height: 50px;
+    padding: 1.5em;
+    margin: 0 20px;
+    color: white;
+    background-color: inherit;
 }
 
 .topbar-content span {
