@@ -1,12 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 :root {
     --link-color: rgb(0, 0, 234);
     --danger: rgb(255, 0, 0);
     --bg-primary: rgb(0,0,0);
+    --bg-hero: rgba(234, 233, 232, 1)
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display", serif;
 }
 
 a {
@@ -28,6 +39,10 @@ a {
 /* display */
 .flex {
     display: flex;
+}
+
+.grid {
+    display: grid;
 }
 
 
