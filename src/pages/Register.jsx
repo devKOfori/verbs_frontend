@@ -5,6 +5,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { MdErrorOutline } from "react-icons/md";
 import FormButton from "../components/FormButton";
 import "../assets/styles/Register.css";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Register = () => {
   const [firstname, setFirstname] = useState("");
@@ -23,7 +26,7 @@ const Register = () => {
 
   // set spinner state variable for when registration POST request
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate()
   const registerAccount = async () => {
     const payload = {
       first_name: firstname,
@@ -31,8 +34,8 @@ const Register = () => {
       email: email,
       password: password,
     };
-    // const registerURL = "https://verbsmerch.pythonanywhere.com/api/register/";
-    const registerURL = "http://localhost:8000/api/register/";
+    const registerURL = "https://verbsmerch.pythonanywhere.com/api/register/";
+    // const registerURL = "http://localhost:8000/api/register/";
     try {
       setLoading(true);
       const response = await fetch(registerURL, {
@@ -55,6 +58,7 @@ const Register = () => {
         setAccountRegistered(true);
         setApiErrors([]);
         console.log(data);
+        return navigate("/login")
       }
     } catch (error) {
       console.error(error.message);
