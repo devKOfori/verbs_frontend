@@ -32,7 +32,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const loginAccount = async () => {
-    const loginURL = "http://localhost:8000/api/token/";
+    const loginURL = "https://verbsmerch.pythonanywhere.com/api/token/";
     const payload = {
       email,
       password,
